@@ -1,0 +1,412 @@
+# -*- coding: utf-8 -*-
+from weasyprint import HTML
+
+# ---------- Content ----------
+SCALE1 = ["دائماً", "أحياناً", "نادراً"]
+SCALE2 = ["تنطبق تماماً", "تنطبق جزئياً", "لا تنطبق"]
+
+topic1_items = [
+    "أفكّر في مدى شرعية وأمانة استخدام النصوص المولّدة بالذكاء الاصطناعي في أبحاثي قبل تقديمها.",
+    "أتحقّق ممّا إذا كانت تطبيقات الذكاء الاصطناعي تنتهك خصوصية البيانات الشخصية للآخرين.",
+    "أحرص على الإشارة بوضوح إلى اعتمادي على أدوات الذكاء الاصطناعي في الأجزاء التي ساعدتني بها.",
+    "أتجنّب استخدام مخرجات الذكاء الاصطناعي إذا شعرت أنها تروّج لأفكار متحيّزة أو غير عادلة.",
+    "أحلّل الآثار التربوية والنفسية البعيدة المدى لاعتماد زملائي الكلّي على تفكير الآلة الجاهز.",
+]
+topic2_items = [
+    "أستطيع تغيير طريقة تفكيري ودراستي التقليدية بسرعة لتتناسب مع أدوات التعلّم الذكية.",
+    "لا أشعر بالإحباط الفكري عندما تُطرح تقنيات ذكاء اصطناعي جديدة تتطلّب مهارات مختلفة.",
+    "أتقبّل فكرة أن الذكاء الاصطناعي يمكن أن يشارك في عمليات التحليل النفسي الإحصائي بكفاءة.",
+    "أبحث دائماً عن طرق تفكير بديلة لتطوير مهاراتي النفسية بما يتلاءم مع سوق العمل الرقمي.",
+    "أستمتع بدمج النظريات النفسية التقليدية مع خوارزميات التفكير الاصطناعي في التطبيقات العملية.",
+]
+
+refs1 = [
+    "العتيبي، بندر نايف (2025). أخلاقيات الذكاء الاصطناعي في التعليم العالي: رؤية تربوية معاصرة. مجلة التربية والابتكار الرقمي، 4(2)، 112–135.",
+    "القحطاني، سارة محمد (2026). التفكير الأخلاقي الرقمي وتطبيقاته لدى طلبة العلوم الإنسانية. دار المناهج للنشر والتوزيع.",
+]
+refs2 = [
+    "الشمري، هدى ضاري (2025). السيكولوجيا الرقمية: المرونة الذهنية وأساليب التفكير الحديثة. المكتبة الأكاديمية.",
+    "عبد الرحمن، طارق مدحت (2026). التكيف المعرفي والابتكار في عصر الذكاء الاصطناعي. مجلة الدراسات النفسية والتربوية المعاصرة، 18(3)، 210–239.",
+]
+
+options = [
+    {
+        "no": "01",
+        "title": "التفكير التأمّلي",
+        "en": "Reflective Thinking",
+        "desc": "يركّز هذا النوع على قدرة الطالب على مراجعة طريقة تعلّمه، وتقييم أدائه، وحلّ المشكلات بناءً على الخبرات السابقة.",
+        "rows": [
+            ("العنوان المقترح", "«مستوى التفكير التأمّلي لدى طلبة الجامعة في ضوء بعض المتغيرات»"),
+            ("المتغير المستقل", "التخصص الدراسي (علمي / إنساني) أو الجنس (ذكور / إناث)."),
+            ("الأداة (المقياس)", "مقياس التفكير التأمّلي (مثل مقياس «كمبر Kember» المترجَم للعربية)، ويقيس أربعة أبعاد: العمل المعتاد، الفهم، التأمّل، التأمّل النقدي."),
+        ],
+        "refs": [
+            "عفانة، عزو، والجيش، يوسف (2009). التدريس والتعلم بالذكاءات المتعددة. غزة: آفاق للنشر والتوزيع.",
+            "صبري، ماهر، والرافعي، محب (2021). التقويم التربوي: أسسه وإجراءاته. الرياض: مكتبة الرشد.",
+        ],
+    },
+    {
+        "no": "02",
+        "title": "التفكير فوق المعرفي",
+        "en": "Metacognition",
+        "desc": "يركّز على وعي الطالب بخطوات تفكيره وقدرته على التخطيط والمراقبة والتقييم الذاتي أثناء الدراسة.",
+        "rows": [
+            ("العنوان المقترح", "«درجة ممارسة مهارات التفكير فوق المعرفي لدى طلاب المرحلة الثانوية»"),
+            ("المتغير المستقل", "المعدّل الدراسي (متفوّقين / عاديين) لمعرفة أثر التحصيل في وعيهم بتفكيرهم."),
+            ("الأداة (المقياس)", "مقياس الوعي بالعمليات فوق المعرفية (مثل مقياس «شراو ودِنيسون Schraw & Dennison» المعرَّب)، ويقيس: التخطيط، المراقبة، التقييم، إدارة المعلومات."),
+        ],
+        "refs": [
+            "جروان، فتحي (2016). تعليم التفكير: مفاهيم وتطبيقات. عمّان: دار الفكر.",
+            "عبيد، وليم، وعفانة، عزو (2007). التفكير والمنهاج المدرسي. القاهرة: دار الفكر العربي.",
+        ],
+    },
+    {
+        "no": "03",
+        "title": "التفكير الإيجابي",
+        "en": "Positive Thinking",
+        "desc": "يركّز على الجانبين النفسي والتربوي معاً، وكيف ينظر الطالب إلى التحديات الدراسية بنظرة تفاؤلية تدفعه إلى الإنجاز.",
+        "rows": [
+            ("العنوان المقترح", "«التفكير الإيجابي وعلاقته بالتحصيل الدراسي لدى طلبة المرحلة الثانوية»"),
+            ("المتغير المستقل", "مستوى التحصيل الدراسي."),
+            ("الأداة (المقياس)", "مقياس التفكير الإيجابي (مثل مقياس عبد الستار إبراهيم، أو مقياس التفكير الإيجابي للشباب المعرَّب)، ويقيس: التفاؤل، الثقة بالنفس، الرضا عن الحياة الدراسية."),
+        ],
+        "refs": [
+            "إبراهيم، عبد الستار (2012). آفاق جديدة في العلاج المعرفي والتفكير الإيجابي. القاهرة: دار رغد للنشر.",
+            "المليجي، رضا (2018). علم النفس التربوي وتطبيقاته الصفية. عمّان: دار الإعصار العلمي.",
+        ],
+    },
+]
+
+
+def scale_head(scale):
+    return "".join(f"<th class='opt'>{s}</th>" for s in scale)
+
+
+def scale_cells(scale):
+    return "".join("<td class='mark'><span class='circle'></span></td>" for _ in scale)
+
+
+def questionnaire(items, scale):
+    rows = ""
+    for i, it in enumerate(items, 1):
+        rows += (
+            f"<tr><td class='num'>{i}</td>"
+            f"<td class='stmt'>{it}</td>"
+            f"{scale_cells(scale)}</tr>"
+        )
+    return (
+        "<table class='q'>"
+        "<thead><tr>"
+        "<th class='num'>م</th>"
+        "<th class='stmt'>العبارة</th>"
+        f"{scale_head(scale)}"
+        "</tr></thead>"
+        f"<tbody>{rows}</tbody></table>"
+    )
+
+
+def reflist(refs):
+    lis = "".join(f"<li>{r}</li>" for r in refs)
+    return f"<ul class='refs'>{lis}</ul>"
+
+
+def topic_block(idx, title, en, desc, axis, scale_name, items, scale, refs):
+    return f"""
+    <section class="topic">
+      <div class="sec-head">
+        <span class="sec-no">{idx}</span>
+        <div class="sec-titles">
+          <h2>{title}</h2>
+          <span class="en">{en}</span>
+        </div>
+      </div>
+
+      <div class="brief">
+        <span class="brief-label">نبذة عن المتغيّر</span>
+        <p>{desc}</p>
+      </div>
+
+      <div class="subhead"><span>المراجع العربية الحديثة</span></div>
+      {reflist(refs)}
+
+      <div class="subhead"><span>الاستبيان (المقياس)</span>
+        <em class="axis">المحور: {axis}</em>
+        <em class="schint">مقياس ثلاثي: {' · '.join(scale)}</em>
+      </div>
+      {questionnaire(items, scale)}
+    </section>
+    """
+
+
+def option_card(o):
+    rows = ""
+    for label, val in o["rows"]:
+        rows += f"<tr><td class='lbl'>{label}</td><td class='val'>{val}</td></tr>"
+    return f"""
+    <div class="card">
+      <div class="card-head">
+        <span class="card-no">{o['no']}</span>
+        <div class="card-titles"><h3>{o['title']}</h3><span class="en">{o['en']}</span></div>
+      </div>
+      <p class="card-desc">{o['desc']}</p>
+      <table class="meta">{rows}</table>
+      <div class="card-refs">
+        <span class="rlabel">أبرز المراجع</span>
+        {reflist(o['refs'])}
+      </div>
+    </div>
+    """
+
+
+topics_html = (
+    topic_block(
+        "١", "مستوى الوعي بالتفكير الأخلاقي الرقمي", "Digital Ethical Thinking",
+        "يقيس عمليات التفكير والتحليل الذاتي التي يقوم بها الطالب لضمان الاستخدام الأخلاقي والآمن للذكاء الاصطناعي عند استخدام تطبيقاته (مثل تجنّب الانتحال العلمي، والتحيّز، وحماية الخصوصية الرقمية) لدى طلبة الجامعة.",
+        "الأمانة الفكرية والمسؤولية الرقمية", "ثلاثي", topic1_items, SCALE1, refs1,
+    )
+    + topic_block(
+        "٢", "المرونة الذهنية الرقمية", "Digital Mental Flexibility",
+        "متغيّر نفسي يقيس مدى قدرة الطالب على تعديل وتطوير أساليب تفكيره النفسي والمعرفي ليتواكب بسرعة وكفاءة مع التغيّرات المتسارعة التي تفرضها التقنيات الذكية، في مواجهة تحديات الذكاء الاصطناعي لدى طلبة تخصص علم النفس.",
+        "التكيّف الفكري مع التحوّل الذكي", "ثلاثي", topic2_items, SCALE2, refs2,
+    )
+)
+
+cards_html = "".join(option_card(o) for o in options)
+
+CSS = """
+@page {
+  size: A4;
+  margin: 16mm 15mm 18mm 15mm;
+  @bottom-center {
+    content: "بحوث التخرّج — قسم علم النفس التربوي · كلية التربية للبنات · جامعة الكوفة";
+    font-family: 'Tajawal'; font-size: 7.6pt; color: #9a8f7a; letter-spacing:.2px;
+  }
+  @bottom-left {
+    content: counter(page);
+    font-family: 'Tajawal'; font-size: 8.5pt; color: #13505B; font-weight:700;
+  }
+}
+@page cover { margin: 0; @bottom-center { content: none; } @bottom-left { content: none; } }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  font-family: 'Amiri', serif; color: #25201a; font-size: 12pt; line-height: 1.95;
+  margin: 0;
+}
+h1,h2,h3 { margin: 0; font-weight: 700; }
+
+/* ---------- COVER ---------- */
+.cover { page: cover; height: 297mm; position: relative; overflow: hidden;
+  background: #0B3A42; color: #fff; }
+.cover .band-top { position:absolute; top:0; left:0; right:0; height: 118mm;
+  background: linear-gradient(160deg,#13505B 0%, #0B3A42 70%); }
+.cover .ornament { position:absolute; top:0; right:0; width:0;height:0;
+  border-top: 70mm solid rgba(200,162,75,.14); border-left: 70mm solid transparent; }
+.cover .ornament2 { position:absolute; top:0; left:0; width:0;height:0;
+  border-top: 46mm solid rgba(255,255,255,.05); border-right: 46mm solid transparent; }
+.cover-inner { position: relative; padding: 20mm 22mm; height:100%; display:flex; flex-direction:column; }
+.uni { text-align:center; }
+.uni .l1 { font-size: 17pt; font-weight:700; letter-spacing:.3px; }
+.uni .l2 { font-size: 13pt; margin-top:3mm; color:#d8e6e8; }
+.uni .l3 { font-size: 12pt; color:#c8a24b; font-weight:700; margin-top:1.5mm; }
+.rule { width: 52mm; height:2px; background:#c8a24b; margin: 7mm auto; opacity:.9; }
+
+.emblem { width: 34mm; height:34mm; border-radius:50%; margin: 4mm auto 0;
+  border: 1.6mm solid #c8a24b; display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,.05); }
+.emblem span { font-family:'Amiri'; font-size: 30pt; font-weight:700; color:#fff; }
+
+.title-wrap { margin-top: 30mm; text-align:center; }
+.kicker { font-family:'Tajawal'; font-size: 11pt; color:#c8a24b; letter-spacing: 3px; font-weight:500; }
+.maintitle { font-size: 30pt; font-weight:700; line-height:1.5; margin-top: 6mm; color:#fff; }
+.subtitle { font-size: 14pt; color:#d8e6e8; margin-top: 6mm; line-height:1.8; }
+
+.cover-foot { margin-top:auto; }
+.present { background: rgba(255,255,255,.07); border:1px solid rgba(200,162,75,.4);
+  border-radius: 3mm; padding: 6mm 8mm; text-align:center; }
+.present .to { font-family:'Tajawal'; font-size: 10.5pt; color:#c8a24b; letter-spacing:1px; }
+.present .who { font-size: 15pt; font-weight:700; margin-top:2mm; color:#fff; }
+.meta-row { display:flex; justify-content:space-between; margin-top: 7mm;
+  font-family:'Tajawal'; font-size: 9.5pt; color:#bcae93; }
+
+/* ---------- INTRO / TOC ---------- */
+.page-title { display:flex; align-items:center; gap: 5mm; margin: 0 0 7mm; }
+.page-title .bar { width: 7mm; height: 13mm; background: #c8a24b; border-radius:2px; }
+.page-title h1 { font-size: 21pt; color:#0B3A42; }
+.page-title .sub { font-family:'Tajawal'; font-size:9.5pt; color:#8a8270; margin-top:1mm; }
+
+.lead { font-size: 12.3pt; line-height:2.0; color:#3a342c; text-align:justify;
+  background:#F6F2E9; border-right:3px solid #c8a24b; padding: 5mm 7mm; border-radius: 0 3mm 3mm 0; }
+
+.toc { margin-top: 9mm; }
+.toc h4 { font-family:'Tajawal'; font-size: 11pt; color:#13505B; font-weight:700;
+  border-bottom:2px solid #e7dcc2; padding-bottom:2mm; margin-bottom:4mm; }
+.toc ul { list-style:none; margin:0; padding:0; }
+.toc li { display:flex; align-items:baseline; gap:3mm; padding: 2.4mm 0; font-size: 12pt; }
+.toc .tnum { font-family:'Tajawal'; font-weight:700; color:#c8a24b; font-size:10.5pt;
+  min-width: 9mm; }
+.toc .dots { flex:1; border-bottom: 1px dotted #cbbfa3; transform: translateY(-3px); }
+.toc .ten { font-family:'Tajawal'; font-size:8.5pt; color:#9a8f7a; }
+
+/* ---------- SECTION HEAD ---------- */
+.part-label { font-family:'Tajawal'; font-weight:700; font-size: 12.5pt; color:#fff;
+  background: linear-gradient(90deg,#13505B,#0B3A42); padding: 3.5mm 6mm; border-radius: 2mm;
+  display:flex; align-items:center; gap:4mm; margin: 0 0 7mm; }
+.part-label .dot { width: 4mm; height:4mm; background:#c8a24b; border-radius:50%; display:inline-block; }
+
+.topic { margin-bottom: 9mm; }
+.sec-head { display:flex; align-items:center; gap: 5mm; margin-bottom: 4mm; }
+.sec-no { font-family:'Amiri'; font-weight:700; font-size: 17pt; color:#fff;
+  background:#13505B; width: 12mm; height:12mm; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; box-shadow: inset 0 0 0 1.4mm #c8a24b; }
+.sec-titles h2 { font-size: 17.5pt; color:#0B3A42; line-height:1.3; }
+.sec-titles .en { font-family:'Tajawal'; font-size: 9.5pt; color:#b8902f; letter-spacing:.5px; }
+
+.brief { background:#EEF3F2; border-radius: 3mm; padding: 4mm 6mm; margin: 3mm 0 5mm;
+  border-right: 3px solid #13505B; }
+.brief-label { font-family:'Tajawal'; font-weight:700; font-size: 9.5pt; color:#13505B;
+  display:block; margin-bottom: 1mm; }
+.brief p { margin:0; font-size: 11.6pt; text-align:justify; color:#33302a; }
+
+.subhead { display:flex; align-items:baseline; gap: 4mm; margin: 5mm 0 3mm; }
+.subhead span { font-family:'Tajawal'; font-weight:700; font-size: 11pt; color:#13505B;
+  position:relative; padding-right: 5mm; }
+.subhead span::before { content:""; position:absolute; right:0; top:50%; transform:translateY(-50%);
+  width:3mm; height:3mm; background:#c8a24b; border-radius:50%; }
+.subhead .axis { font-family:'Amiri'; font-style:normal; font-size: 10.5pt; color:#6a6354; }
+.subhead .schint { font-family:'Tajawal'; font-style:normal; font-size: 8.3pt; color:#9a8f7a; margin-right:auto; }
+
+ul.refs { list-style:none; margin: 0; padding: 0; }
+ul.refs li { position:relative; padding: 2mm 7mm 2mm 0; font-size: 11pt; line-height:1.8;
+  color:#34302a; text-align:justify; border-bottom:1px dashed #e7dcc2; }
+ul.refs li:last-child { border-bottom:none; }
+ul.refs li::before { content:"❖"; position:absolute; right:0; top:2mm; color:#c8a24b; font-size:10pt; }
+
+/* ---------- QUESTIONNAIRE TABLE ---------- */
+table.q { width:100%; border-collapse: collapse; margin-top: 2mm;
+  border: 1px solid #cdd9d7; border-radius: 2mm; overflow:hidden; }
+table.q thead th { background: linear-gradient(90deg,#13505B,#1c6675); color:#fff;
+  font-family:'Tajawal'; font-weight:700; font-size: 9.6pt; padding: 3mm 2mm; text-align:center; }
+table.q th.stmt { text-align:right; padding-right:5mm; }
+table.q td { padding: 2.6mm 2mm; font-size: 11pt; border-top:1px solid #e2e9e8; }
+table.q td.num { text-align:center; width: 9mm; font-family:'Tajawal'; font-weight:700;
+  color:#13505B; background:#f2f6f5; }
+table.q th.num { width:9mm; }
+table.q td.stmt { text-align:right; padding-right:5mm; line-height:1.7; color:#2c2822; }
+table.q th.opt { width: 21mm; }
+table.q td.mark { text-align:center; width:21mm; }
+table.q tbody tr:nth-child(even) td { background:#f7faf9; }
+.circle { display:inline-block; width: 4.6mm; height:4.6mm; border:1.3px solid #9bb0ad;
+  border-radius:50%; }
+
+/* ---------- OPTION CARDS ---------- */
+.cards-intro { font-size: 12pt; color:#3a342c; text-align:justify; margin-bottom:6mm;
+  background:#F6F2E9; border-right:3px solid #c8a24b; padding: 4mm 6mm; border-radius:0 3mm 3mm 0; }
+.card { border:1px solid #ddd3bd; border-radius: 3mm; margin-bottom: 6mm; overflow:hidden;
+  break-inside: avoid; }
+.card-head { display:flex; align-items:center; gap:4mm; background:#EEF3F2; padding: 3.5mm 5mm;
+  border-bottom: 1px solid #ddd3bd; }
+.card-no { font-family:'Tajawal'; font-weight:700; font-size: 13pt; color:#fff; background:#c8a24b;
+  width: 10mm; height:10mm; border-radius: 2mm; display:flex; align-items:center; justify-content:center; }
+.card-titles h3 { font-size: 15pt; color:#0B3A42; }
+.card-titles .en { font-family:'Tajawal'; font-size: 9pt; color:#b8902f; }
+.card-desc { margin: 4mm 5mm 2mm; font-size: 11.3pt; color:#33302a; text-align:justify; }
+table.meta { width: calc(100% - 10mm); margin: 1mm 5mm 3mm; border-collapse:collapse; }
+table.meta td { padding: 2.2mm 0; vertical-align:top; border-top:1px dashed #e7dcc2; font-size:11pt; }
+table.meta tr:first-child td { border-top:none; }
+table.meta td.lbl { font-family:'Tajawal'; font-weight:700; font-size: 9.6pt; color:#13505B;
+  width: 33mm; padding-left:4mm; }
+table.meta td.val { color:#2f2b25; text-align:justify; line-height:1.75; }
+.card-refs { background:#faf8f2; padding: 3mm 5mm 2mm; border-top:1px solid #eee3cb; }
+.card-refs .rlabel { font-family:'Tajawal'; font-weight:700; font-size: 9pt; color:#b8902f; }
+.card-refs ul.refs li { font-size: 10.4pt; padding-top:1.4mm; padding-bottom:1.4mm; }
+
+.note { margin-top: 4mm; font-family:'Tajawal'; font-size: 8.8pt; color:#8a8270;
+  text-align:center; border-top:1px solid #e7dcc2; padding-top: 3mm; }
+"""
+
+HTML_DOC = f"""<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<style>{CSS}</style></head><body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="band-top"></div>
+  <div class="ornament"></div>
+  <div class="ornament2"></div>
+  <div class="cover-inner">
+    <div class="uni">
+      <div class="l1">جامعة الكوفة</div>
+      <div class="l2">كلية التربية للبنات</div>
+      <div class="l3">قسم علم النفس التربوي</div>
+    </div>
+    <div class="rule"></div>
+    <div class="emblem"><span>ﻧﻔﺲ</span></div>
+
+    <div class="title-wrap">
+      <div class="kicker">دليل مقترحات بحوث التخرّج</div>
+      <div class="maintitle">مصادر ومتغيرات ومقاييس<br>لبحوث التخرّج</div>
+      <div class="subtitle">خمسة مقترحات بحثية في التفكير والذكاء الاصطناعي<br>مع المراجع الحديثة وأدوات القياس الجاهزة</div>
+    </div>
+
+    <div class="cover-foot">
+      <div class="present">
+        <div class="to">مُقدَّم إلى</div>
+        <div class="who">الدكتورة المشرفة على بحوث التخرّج</div>
+      </div>
+      <div class="meta-row">
+        <span>إعداد طالبات قسم علم النفس التربوي</span>
+        <span>العام الدراسي ٢٠٢٥ – ٢٠٢٦</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INTRO + TOC ============ -->
+<div class="page-title">
+  <span class="bar"></span>
+  <div><h1>تمهيد ومحتويات الدليل</h1>
+  <div class="sub">Overview &amp; Contents</div></div>
+</div>
+
+<p class="lead">يضمّ هذا الدليل مجموعة موجزة ومنظَّمة من المقترحات البحثية الصالحة لبحوث التخرّج في
+تخصص علم النفس التربوي، موزَّعة على محورَين: محورٌ حديثٌ يربط التفكير بأخلاقيات الذكاء الاصطناعي
+والمرونة الذهنية الرقمية مع مقاييسه الجاهزة، ومحورٌ تأصيليٌّ يقدّم ثلاثة خيارات راسخة في أنواع التفكير.
+وقد رُوعي في كلّ مقترح تحديدُ المتغيّر، ونبذةٍ تعريفية عنه، وأحدثِ المراجع العربية، وأداةِ القياس المناسبة.</p>
+
+<div class="toc">
+  <h4>محتويات الدليل</h4>
+  <div class="part-label" style="margin-bottom:4mm"><span class="dot"></span> المحور الأول · مقترحات قائمة على الذكاء الاصطناعي</div>
+  <ul>
+    <li><span class="tnum">١</span> مستوى الوعي بالتفكير الأخلاقي الرقمي <span class="dots"></span><span class="ten">Digital Ethical Thinking</span></li>
+    <li><span class="tnum">٢</span> المرونة الذهنية الرقمية <span class="dots"></span><span class="ten">Digital Mental Flexibility</span></li>
+  </ul>
+  <div class="part-label" style="margin:5mm 0 4mm"><span class="dot"></span> المحور الثاني · خيارات تأصيلية في أنواع التفكير</div>
+  <ul>
+    <li><span class="tnum">٠١</span> التفكير التأمّلي <span class="dots"></span><span class="ten">Reflective Thinking</span></li>
+    <li><span class="tnum">٠٢</span> التفكير فوق المعرفي <span class="dots"></span><span class="ten">Metacognition</span></li>
+    <li><span class="tnum">٠٣</span> التفكير الإيجابي <span class="dots"></span><span class="ten">Positive Thinking</span></li>
+  </ul>
+</div>
+
+<!-- ============ PART 1 ============ -->
+<div style="break-before: page;"></div>
+<div class="part-label"><span class="dot"></span> المحور الأول · مقترحات قائمة على الذكاء الاصطناعي</div>
+{topics_html}
+
+<!-- ============ PART 2 ============ -->
+<div style="break-before: page;"></div>
+<div class="part-label"><span class="dot"></span> المحور الثاني · خيارات تأصيلية في أنواع التفكير</div>
+<p class="cards-intro">ثلاثة خيارات بحثية راسخة، يصلح كلٌّ منها لبحث تخرّج بمتغيّر مستقلّ واحد. يعرض كلُّ خيار:
+تعريفه المختصر، والعنوان المقترح، والمتغيّر المستقل، وأداة القياس بأبعادها، وأبرز المراجع العربية المعتمدة.</p>
+{cards_html}
+
+<div class="note">انتهى الدليل — أُعِدّ بعنايةٍ ليكون مرجعاً موجزاً وأنيقاً لمناقشة مقترحات بحوث التخرّج.</div>
+
+</body></html>"""
+
+with open("/tmp/research.html", "w", encoding="utf-8") as f:
+    f.write(HTML_DOC)
+
+HTML(string=HTML_DOC).write_pdf("/tmp/research.pdf")
+print("PDF written: /tmp/research.pdf")
