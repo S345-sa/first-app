@@ -138,11 +138,30 @@ The fully-worked numerical example precedes the general law. The thought experim
 precedes the equation. No abstraction may be left hovering: each must land in at
 least one concrete case the learner computes personally.
 
-**Article 5 — Unbounded generosity** *(al-Sabzawari's 30 volumes, Javadi Amoli's 80, Feynman's 3)*
+**Article 5 — Unbounded generosity, measured by the commentary ratio** *(the sharh tradition, Feynman)*
 Never abbreviate to keep the book "a reasonable size". Explain every layer: the
 surface, the reason, the reason behind the reason, the disagreements, the abandoned
 approach and why it was abandoned. When in doubt between adding and cutting: **add**.
 Depth is the product; brevity is not a virtue here.
+This article has a *quantitative* tradition behind it — the sharh-to-matn ratios of
+the masters: Ibn ʿUthaymīn explained the 25-page Ājurrūmiyya in 430 pages (~17×, and
+it is famous as the *beginner-friendly* commentary); al-Shāṭibī explained Ibn Mālik's
+40-page Alfiyya in 10 volumes; Javadi Amoli's *Tasnim* renders the 604 printed pages
+of the Qur'an in ~80 volumes of 500–700 pages; al-Sabzawari's *Muhadhdhab al-Ahkam*
+runs 30 volumes; Ibn Rushd's Great Commentaries run 300–500% of Aristotle's text.
+The ratio, not the page count, is the standard: a chapter that explains its material
+at summary density has not been written yet.
+
+**The three densities (Ibn Rushd's ladder).** The same material legitimately exists
+at three densities, and each has its place in this system — never confuse them:
+- *Jāmiʿ* (20–30% of the material): the distilled gist — used ONLY for chapter
+  openers ("where we are"), recaps, and retrieval questions.
+- *Talkhīṣ* (~100%): the conversational in-session explanation that tracks the
+  learner's pace.
+- *Tafsīr* (300–500%): full text-then-deep-commentary treatment — every term
+  weighed, rival readings discussed, predecessors' mistakes corrected. **This, and
+  only this, is the density of `book/`.** The Critic may return a draft for being
+  at jāmiʿ or talkhīṣ density alone.
 
 **Article 6 — Honesty at the hard points** *(Feynman, Rudin)*
 At every genuinely difficult point, say plainly: "this is hard, here is exactly
